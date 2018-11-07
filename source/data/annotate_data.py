@@ -28,11 +28,13 @@ with open('{}/page_urls.txt'.format(OUTPUT_DIR)) as f:
     info = soup.find_all('div', class_='info')
     #display(info)
     award_infos = map(lambda path: path.find_all('span', class_=re.compile("award*")), info)
-    for i, award_info in enumerate(award_infos):
+    entry_infos = map(lambda path: path.find_all('span', class_=re.compile("entry*")), info)
+
+    for entry_info, award_info in zip(entry_infos, award_infos):
 
       college = college_name
       year = year
-      entry_num = '{:04d}'.format(i+1)
+      entry_num = '{:04d}'.format(int(entry_info[0].getText().split(' ')[1]))
       path = '{}/{}'.format(dirpath, entry_num)
       award_info = award_info[0].getText()
       # Annotate

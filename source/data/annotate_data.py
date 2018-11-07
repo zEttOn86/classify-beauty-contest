@@ -21,18 +21,20 @@ with open('{}/page_urls.txt'.format(OUTPUT_DIR)) as f:
     # Make directories for saving images
     college_name, year = re.findall(r'(\d+|\D+)', url.strip().split('/')[-1])
     dirpath = '{}/{}'.format(college_name, year)
-    print('Download from: {}'.format(dirpath))
+    print('Download from: {}'.format(url.strip()))
     r = requests.get('{}'.format(url.strip()))
     soup = BeautifulSoup(r.text, 'html.parser')
 
     info = soup.find_all('div', class_='info')
     #display(info)
     award_infos = map(lambda path: path.find_all('span', class_=re.compile("award*")), info)
-    for i, award_info in enumerate(award_infos):
+    entry_infos = map(lambda path: path.find_all('span', class_=re.compile("entry*")), info)
+
+    for entry_info, award_info in zip(entry_infos, award_infos):
 
       college = college_name
       year = year
-      entry_num = '{:04d}'.format(i+1)
+      entry_num = '{:04d}'.format(int(entry_info[0].getText().split(' ')[1]))
       path = '{}/{}'.format(dirpath, entry_num)
       award_info = award_info[0].getText()
       # Annotate

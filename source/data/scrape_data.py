@@ -29,7 +29,7 @@ with open('{}/page_urls.txt'.format(OUTPUT_DIR), 'w') as f:
     f.write('{}\n'.format(path))
 
 # データを取得
-with open('{}/20181102page_urls.txt'.format(OUTPUT_DIR)) as f:
+with open('{}/page_urls.txt'.format(OUTPUT_DIR)) as f:
   for url in f:
     # Make directories for saving images
     college_name, year = re.findall(r'(\d+|\D+)', url.strip().split('/')[-1])

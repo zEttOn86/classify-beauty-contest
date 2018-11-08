@@ -24,6 +24,9 @@ def main():
 
     new_df = df.replace(r'miss*', '', regex=True)
     new_df = new_df.replace(r'todai', 'tokyo', regex=True)
+    new_df = new_df.replace(r'chibadai', 'chiba', regex=True)
+    new_df = new_df.replace(r'yagamisai', 'yagami', regex=True)
+
 
     print('----- Copy start -----')
     input_dir = os.path.join(args.base, args.input_dir)

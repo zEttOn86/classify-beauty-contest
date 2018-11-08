@@ -21,7 +21,7 @@ with open('{}/page_urls.txt'.format(OUTPUT_DIR)) as f:
     # Make directories for saving images
     college_name, year = re.findall(r'(\d+|\D+)', url.strip().split('/')[-1])
     dirpath = '{}/{}'.format(college_name, year)
-    print('Download from: {}'.format(dirpath))
+    print('Download from: {}'.format(url.strip()))
     r = requests.get('{}'.format(url.strip()))
     soup = BeautifulSoup(r.text, 'html.parser')
 

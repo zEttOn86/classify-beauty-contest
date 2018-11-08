@@ -21,7 +21,14 @@
 
 2. `misshoge` と `hoge` のような表記ゆれが存在するので、これを消す
 
+    ```
+    python source\data\change_orthographic_variants.py
+    ```
+
 3. 顔のクロップ
+
+    ```
+    ```
 
 4. 使用データの選択
 

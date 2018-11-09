@@ -27,8 +27,30 @@
 
 3. 顔のクロップ
 
+    - 分類器は，[ここ](https://github.com/opencv/opencv/tree/master/data/haarcascades)から `data/external` にダウンロード
+
+    - もしくは，[ここ](https://github.com/opencv/opencv_contrib/tree/master/modules/face/data/cascades)
+
     ```
+    python source\data\face_detecter.py
     ```
+
+    - 次のように検出に失敗するので， `face_recognition` を使用する
+
+      <img src='report/fig1.png'>
+
+    - How to install
+
+      ```
+      # Make sure already installed visual studio 2015
+      pip install cmake
+      pip install face_recognition
+      # Ref. https://github.com/ageitgey/face_recognition/issues/175#issuecomment-426216930
+      ```
+
+    
+
+
 
 4. 使用データの選択
 

@@ -35,7 +35,7 @@
 
         <img src='report/fig1.png'>
 
-    - How to install face_recognition
+    - How to install `face_recognition`
 
       ```
       # Make sure already installed visual studio 2015
@@ -54,8 +54,67 @@
 
       <img src='report/fig2.png'>
 
-#### 2. モデルの用意
+4. データの選択
 
+    - 変なデータが混じっていないか，人力で取捨選択
+
+      <img src='report/fig3.png'>
+
+    - Bicubic補間や解像度の問題より，ジャギーが乗っている画像が存在するが，今回はすべて使う
+
+      <img src='report/fig4.png'>
+
+    - コンテスト参加者数 は `2011` 人
+
+5. データの分割
+
+    - train 60% (7964枚), validation 20% (2798枚), test 20% (2483枚)に分割する
+
+    - 今回は，コンテスト参加者ごとに分割した．なので，1206人が訓練データ，402人が検証データ，403人がテストデータとなる
+
+    ```
+    python dataset.py
+    ```
+
+#### 2. モデルの訓練とテスト
+
+- 今回は，chainer の　[mnistのサンプル](https://github.com/chainer/chainer/blob/master/examples/mnist/train_mnist.py) をもとにする
+
+  ```
+  python training.py -g 0
+  ```
+
+- ネットワーク構造
+
+  <img src='report/fig5.png' width='50%'>
+
+- 学習経過
+
+  <img src='report/fig6.png' width='45%'> <img src='report/fig7.png' width='45%'>
+
+- テスト
+
+  ```
+  python inference.py -g 0 -m result/Classifier_1593.npz
+  ```
+
+- テスト結果
+
+  - Confusion matrix
+
+    <img src='report/fig8.png'>
+
+  - 推定例
+
+    <img src='report/fig9.png' width='50%'><img src='report/fig10.png' width='50%'>
+
+### まとめ
+
+- ほとんど外した．
+
+- データの分割方法は検討すべき
+
+- 学習データがおそらく，不均一データ
 
 ### References
 

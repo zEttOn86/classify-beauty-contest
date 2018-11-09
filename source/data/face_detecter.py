@@ -2,7 +2,8 @@
 import os, sys, time
 import argparse, glob
 import pandas as pd
-import cv2
+import face_recognition
+from PIL import Image
 
 def main():
 
@@ -57,26 +58,32 @@ def detect_faces(input_path, output_path, cascade_path):
     """
 
     MARGIN = 30
-    cascade = cv2.CascadeClassifier(cascade_path)
-    image = cv2.imread(input_path)
-    gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    H, W = gray_image.shape
-    faces = cascade.detectMultiScale(gray_image)
+    # Load the jpg file into a numpy array
+    image = face_recognition.load_image_file(input_path)
+
+    H, W, _ = image.shape
+
+    # Find all the faces in the image using a pre-trained convolutional neural network.
+    # This method is more accurate than the default HOG model, but it's slower
+    # unless you have an nvidia GPU and dlib compiled with CUDA extensions. But if you do,
+    # this will use GPU acceleration and perform well.
+    face_locations = face_recognition.face_locations(image, number_of_times_to_upsample=0, model="cnn")
+    print("I found {} face(s) in this photograph.".format(len(face_locations)))
+
     # Extract when just one face is detected
-    if (len(faces) == 1):
-        (x, y, w, h) = faces[0]
-        image = image[max(y-MARGIN,0):min(H-1, y+h+MARGIN), max(x-MARGIN,0):min(W-1, x+w+MARGIN)]
-        image = cv2.resize(image, (224, 224), interpolation = cv2.INTER_CUBIC)
+    if len(face_locations)==1:
+        #for face_location in face_locations:
+        # Print the location of each face in this image
+        top, right, bottom, left = face_locations[0]
+        print("A face is located at pixel location Top: {}, Left: {}, Bottom: {}, Right: {}".format(top, left, bottom, right))
+
+        # You can access the actual face itself like this:
+        face_image = image[max(top-MARGIN,0):min(H-1, bottom+MARGIN), max(left-MARGIN,0):min(W-1, right+MARGIN)]
+        pil_image = Image.fromarray(face_image)
+        pil_image = pil_image.resize((224,224), resample=Image.BICUBIC)
         if not os.path.exists(os.path.dirname(output_path)):
             os.makedirs(os.path.dirname(output_path))
-        cv2.imwrite(output_path, image)
-        #cv2.imshow('image', image)
-        #cv2.waitKey(0)
-        #cv2.destroyAllWindows()
-    else:
-        print('     I cant detect face:')
-        print('         {}'.format(os.path.basename(input_path)))
-
+        pil_image.save(output_path, 'JPEG', quality=100, optimize=True)
 
 if __name__ == '__main__':
     main()

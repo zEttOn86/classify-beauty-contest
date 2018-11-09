@@ -27,19 +27,15 @@
 
 3. 顔のクロップ
 
-    - 分類器は，[ここ](https://github.com/opencv/opencv/tree/master/data/haarcascades)から `data/external` にダウンロード
+    - OpenCVの顔検出をすると，次のように検出に失敗するので， [face_recognition](https://github.com/ageitgey/face_recognition) を使用する
 
-    - もしくは，[ここ](https://github.com/opencv/opencv_contrib/tree/master/modules/face/data/cascades)
+      - 分類器は，[ここ](https://github.com/opencv/opencv/tree/master/data/haarcascades)か[ここ](https://github.com/opencv/opencv_contrib/tree/master/modules/face/data/cascades)からダウンロードした
 
-    ```
-    python source\data\face_detecter.py
-    ```
+      - OpenCV 実行結果
 
-    - 次のように検出に失敗するので， `face_recognition` を使用する
+        <img src='report/fig1.png'>
 
-      <img src='report/fig1.png'>
-
-    - How to install
+    - How to install face_recognition
 
       ```
       # Make sure already installed visual studio 2015
@@ -48,11 +44,17 @@
       # Ref. https://github.com/ageitgey/face_recognition/issues/175#issuecomment-426216930
       ```
 
-    
+    - 画像は，224x224にBicubicを用いて，リサイズする
 
+      ```
+      python source\data\face_detecter.py
+      ```
 
+    - 実行結果
 
-4. 使用データの選択
+      <img src='report/fig2.png'>
+
+#### 2. モデルの用意
 
 
 ### References

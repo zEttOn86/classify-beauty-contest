@@ -1,6 +1,7 @@
 # Original
 *.jpg
 data/preprocessed/*
+data/preprocessed_opencv/*
 data/interim/*
 data/raw/*
 !.gitkeep
